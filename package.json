@@ -1,0 +1,24 @@
+{
+  "name": "exam-app",
+  "version": "1.0.0",
+  "description": "同等学力工商管理考试智能考点分析工具",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3333",
+    "build": "next build",
+    "start": "next start -p 3333",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "lucide-react": "^1.28.0",
+    "next": "^16.2.10",
+    "postcss": "^8.5.19",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5.7.0"
+  }
+}
