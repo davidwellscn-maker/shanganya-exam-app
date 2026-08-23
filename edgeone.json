@@ -1,0 +1,11 @@
+{
+  "name": "shanganya-exam-app",
+  "buildCommand": "npm run build:export",
+  "installCommand": "npm install",
+  "outputDirectory": "./out",
+  "nodeVersion": "22.11.0",
+  "environmentVariables": {
+    "EXPORT_BUILD": "1",
+    "NEXT_PUBLIC_API_BASE": "https://api.ducktoshore.cn"
+  }
+}

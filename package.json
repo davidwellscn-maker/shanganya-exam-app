@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev -p 3333",
     "build": "next build",
+    "build:export": "node scripts/export-build.js",
     "start": "next start -p 3333",
     "lint": "next lint"
   },

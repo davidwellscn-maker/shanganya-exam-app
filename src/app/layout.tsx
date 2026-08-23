@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { GraduationCap, Search } from "lucide-react";
 import { NavLink } from "@/components/ui/nav-link";
+import { AuthBar } from "@/components/ui/auth-bar";
+import { AuthProvider } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "考试学习平台 · 同等学力工商管理备考",
@@ -12,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-CN">
       <body className="bg-background text-foreground antialiased min-h-screen font-sans">
+        <AuthProvider>
         <header className="glass-header sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
             {/* Logo + 站点名 */}
@@ -29,17 +32,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <NavLink href="/chapters/1" label="章节学习" />
             </nav>
 
-            {/* 搜索 + 头像 */}
+            {/* 搜索 + 登录态 */}
             <div className="flex items-center gap-3">
               <div className="h-9 w-48 rounded-md border border-input bg-muted/40 px-3 flex items-center gap-2">
                 <Search className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground hidden sm:inline">搜索教材/真题</span>
                 <span className="text-sm text-muted-foreground sm:hidden">搜索</span>
               </div>
-              <div
-                className="w-9 h-9 rounded-full bg-muted"
-                title="用户头像占位"
-              ></div>
+              <AuthBar />
             </div>
           </div>
         </header>
@@ -64,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </footer>
+        </AuthProvider>
       </body>
     </html>
   );
