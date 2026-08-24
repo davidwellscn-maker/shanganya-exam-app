@@ -2,8 +2,11 @@
 // 开发环境：默认走相对路径 /api（由 next.config.js rewrites 代理到服务器）
 // 生产环境：优先使用构建时注入的 NEXT_PUBLIC_API_BASE，兜底直连 API 域名
 // 兜底值保证即使云端构建环境变量缺失，前端也始终请求 api.ducktoshore.cn/api，避免 404
+// 同时兼容旧版环境变量末尾缺少 /api 的情况
 
-export const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "https://api.ducktoshore.cn/api";
+const rawBase = process.env.NEXT_PUBLIC_API_BASE ?? "https://api.ducktoshore.cn/api";
+const normalizedBase = rawBase.replace(/\/+$/, "");
+export const API_BASE = normalizedBase.endsWith("/api") ? normalizedBase : `${normalizedBase}/api`;
 
 export interface AuthData {
   id: number;
