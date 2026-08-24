@@ -30,7 +30,7 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(` + "`" + `${API_BASE}${path}` + "`" + `, {
+  const res = await fetch(`${API_BASE}${path}`, {
     ...init,
     headers: {
       "Content-Type": "application/json",
@@ -64,6 +64,6 @@ export function apiLogin(account: string, password: string) {
 /** 获取当前用户信息 */
 export function apiMe(token: string) {
   return request<{ code: number; data: MeData }>("/me", {
-    headers: { Authorization: ` + "`" + `Bearer ${token}` + "`" + ` },
+    headers: { Authorization: `Bearer ${token}` },
   });
 }
