@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { notFound } from "next/navigation";
 import {
   BookOpen, FileText, Brain, ChevronDown, ChevronRight,
   PanelLeft, PanelRight, BarChart3, Clock, Award, Target,
@@ -51,11 +50,13 @@ const typeFilterLabel: Record<string, string> = {
   all: "全部", single: "单选", multiple: "多选", term: "名词", short: "简答", essay: "论述", case: "案例",
 };
 
-export default function KPDetailContent({ chNum, kpId }: { chNum: string; kpId: string }) {
-  const chapter = allChapters.find((c) => c.number === parseInt(chNum));
-  if (!chapter) notFound();
-  const kp = chapter.kps.find((k) => k.id === kpId);
-  if (!kp) notFound();
+export default function KPDetailContent({
+  chapter,
+  kp,
+}: {
+  chapter: (typeof allChapters)[number];
+  kp: (typeof allChapters)[number]["kps"][number];
+}) {
 
   const { ready, getKP, markViewed, setLevel, progress } = useProgress();
   const [tab, setTab] = useState<Tab>("detail");
@@ -93,7 +94,7 @@ export default function KPDetailContent({ chNum, kpId }: { chNum: string; kpId: 
 
   const state = getKP(chapter.number, kp.id);
   const level: MasteryLevel = state?.level ?? 0;
-  const conn = (connData as ChapterConnections)[chNum];
+  const conn = (connData as ChapterConnections)[String(chapter.number)];
 
   const nextKP = useMemo(() => {
     const idx = chapter.kps.findIndex((k) => k.id === kp.id);

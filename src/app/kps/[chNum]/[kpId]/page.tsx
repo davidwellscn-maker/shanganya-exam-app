@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import allChapters from "@/data/all_knowledge_points.json";
 import KPDetailContent from "./content";
 
@@ -11,10 +12,15 @@ export function generateStaticParams() {
 // 只允许已生成的页面路由，其余返回 404
 export const dynamicParams = false;
 
-export default function KPDetailPage({
+export default async function KPDetailPage({
   params,
 }: {
-  params: { chNum: string; kpId: string };
+  params: Promise<{ chNum: string; kpId: string }>;
 }) {
-  return <KPDetailContent chNum={params.chNum} kpId={params.kpId} />;
+  const { chNum, kpId } = await params;
+  const chapter = allChapters.find((c) => c.number === parseInt(chNum));
+  if (!chapter) notFound();
+  const kp = chapter.kps.find((k) => k.id === kpId);
+  if (!kp) notFound();
+  return <KPDetailContent chapter={chapter} kp={kp} />;
 }
