@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { notFound } from "next/navigation";
 import allChapters from "@/data/all_knowledge_points.json";
 import { useProgress } from "@/lib/useProgress";
 import { getQuestionsForChapter, QuestionItem } from "@/lib/questions";
@@ -79,9 +78,7 @@ function addDays(date: Date, days: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-export default function ChapterContent({ chNum }: { chNum: string }) {
-  const chapter = allChapters.find((c) => c.number === parseInt(chNum));
-  if (!chapter) notFound();
+export default function ChapterContent({ chapter }: { chapter: typeof allChapters[0] }) {
 
   const { getStats, getKP, setLevel } = useProgress();
   const [openPiece, setOpenPiece] = useState<string | null>(

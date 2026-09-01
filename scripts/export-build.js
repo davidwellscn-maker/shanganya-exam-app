@@ -26,6 +26,7 @@ try {
     console.log("[export-build] 已临时移走 /api 代理路由");
   }
 
+  process.env.EXPORT_BUILD = "1";
   execSync("npx next build", { cwd: root, stdio: "inherit" });
 } finally {
   if (fs.existsSync(tmpDir)) {

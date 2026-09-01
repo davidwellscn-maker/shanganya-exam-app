@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import allChapters from "@/data/all_knowledge_points.json";
 import ChapterContent from "./content";
 
@@ -9,6 +10,9 @@ export function generateStaticParams() {
 // 只允许已生成的章节路由，其余返回 404
 export const dynamicParams = false;
 
-export default function ChapterPage({ params }: { params: { chNum: string } }) {
-  return <ChapterContent chNum={params.chNum} />;
+export default async function ChapterPage({ params }: { params: Promise<{ chNum: string }> }) {
+  const { chNum } = await params;
+  const chapter = allChapters.find((c) => c.number === parseInt(chNum));
+  if (!chapter) notFound();
+  return <ChapterContent chapter={chapter} />;
 }
