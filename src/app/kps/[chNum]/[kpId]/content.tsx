@@ -38,9 +38,6 @@ function getPieceName(chNum: number) {
 const weightStars: Record<string, string> = {
   高: "★★★", 中: "★★☆", 低: "★☆☆",
 };
-const masteryLabel: Record<number, string> = {
-  0: "未学习", 1: "学习中", 2: "已掌握",
-};
 
 const typeFilterKeys = ["all", "single", "multiple", "term", "short", "essay", "case"] as const;
 const typeFilterName: Record<string, string> = {
@@ -180,7 +177,6 @@ export default function KPDetailContent({
           <span>{kp.weight}权重</span>
           <span className="opacity-60">·</span>
           <span>近10年 {kp.examFrequency} 题</span>
-          <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{masteryLabel[level]}</span>
         </p>
       </div>
 

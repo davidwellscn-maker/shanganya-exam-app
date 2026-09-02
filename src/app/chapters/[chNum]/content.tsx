@@ -6,6 +6,7 @@ import { useProgress } from "@/lib/useProgress";
 import { getQuestionsForChapter, QuestionItem } from "@/lib/questions";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { QuestionCard } from "@/components/ui/question-card";
+import { MasteryCycleButton } from "@/components/ui/mastery-cycle-button";
 import { cn } from "@/lib/utils";
 import {
   BookOpen,
@@ -52,11 +53,6 @@ const weightStars: Record<string, string> = {
   高: "★★★",
   中: "★★☆",
   低: "★☆☆",
-};
-const masteryLabel: Record<number, string> = {
-  0: "未学习",
-  1: "学习中",
-  2: "已掌握",
 };
 
 function formatTime(seconds: number): string {
@@ -174,10 +170,6 @@ export default function ChapterContent({ chapter }: { chapter: typeof allChapter
       return next;
     });
   }, []);
-
-  const markKP = (kpId: string, mastered: boolean) => {
-    setLevel(chapter.number, kpId, mastered ? 2 : 1);
-  };
 
   const today = new Date();
   const pieceInfo = PIECES.find(([, s, e]) => chapter.number >= s && chapter.number <= e) ?? PIECES[0];
@@ -310,21 +302,12 @@ export default function ChapterContent({ chapter }: { chapter: typeof allChapter
                             {kp.name}
                           </a>
                           <span className="text-xs text-primary">{weightStars[kp.weight] ?? "★★☆"}</span>
-                          <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                            {masteryLabel[level]}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => markKP(kp.id, level !== 2)}
-                            className={cn(
-                              "ml-auto h-7 px-3 rounded-md text-xs whitespace-nowrap transition-colors",
-                              level === 2
-                                ? "bg-muted text-muted-foreground"
-                                : "bg-primary text-primary-foreground hover:opacity-90"
-                            )}
-                          >
-                            {level === 2 ? "已掌握" : "标记已学习"}
-                          </button>
+                          <div className="ml-auto">
+                            <MasteryCycleButton
+                              level={level}
+                              onChange={(lvl) => setLevel(chapter.number, kp.id, lvl)}
+                            />
+                          </div>
                         </div>
                         <div className="text-xs text-muted-foreground mt-1 line-clamp-2">{kp.definition}</div>
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground mt-1">
